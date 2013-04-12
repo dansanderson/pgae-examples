@@ -1,0 +1,22 @@
+<html><body>
+
+{% if results %}
+
+<p>Messages:</p>
+<ul>
+{% for result in results %}
+ <li>{{ result.key().id() }}: {{ result.create_date }}</li>
+{% endfor %}
+</ul>
+
+{% if next_cursor %}
+<p><a href="/results?c={{ next_cursor }}">Next</a></p>
+{% endif %}
+
+{% else %}
+<p>There are no messages.</p>
+{% endif %}
+
+<p><a href="/">Go home.</a></p>
+
+</body></html>

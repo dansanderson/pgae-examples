@@ -1,0 +1,21 @@
+application: secureconnections
+version: 1
+runtime: python27
+api_version: 1
+threadsafe: true
+
+handlers:
+- url: /always
+  script: main.app
+  secure: always
+
+- url: /never
+  script: main.app
+  secure: never
+
+- url: /optional
+  script: main.app
+  secure: optional
+
+- url: /
+  script: main.app

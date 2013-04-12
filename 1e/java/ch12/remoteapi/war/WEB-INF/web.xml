@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE web-app PUBLIC
+ "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+ "http://java.sun.com/dtd/web-app_2_3.dtd">
+
+<web-app xmlns="http://java.sun.com/xml/ns/javaee" version="2.5">
+
+  <!-- MainServlet just displays an informative message.
+       It isn't needed for the /remote_api entry point. -->
+  <servlet>
+    <servlet-name>main</servlet-name>
+    <servlet-class>remoteapi.MainServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>main</servlet-name>
+    <url-pattern>/</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>remoteapi</servlet-name>
+    <servlet-class>
+      com.google.apphosting.utils.remoteapi.RemoteApiServlet
+    </servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>remoteapi</servlet-name>
+    <url-pattern>/remote_api</url-pattern>
+  </servlet-mapping>
+
+  <security-constraint>
+    <web-resource-collection>
+      <web-resource-name>remoteapi</web-resource-name>
+      <url-pattern>/remote_api</url-pattern>
+    </web-resource-collection>
+    <auth-constraint>
+      <role-name>admin</role-name>
+    </auth-constraint>
+  </security-constraint>
+
+</web-app>

@@ -1,0 +1,17 @@
+application: googleaccounts
+version: 1
+runtime: python27
+api_version: 1
+threadsafe: true
+
+handlers:
+- url: /required
+  script: main.app
+  login: required
+
+- url: /admin
+  script: main.app
+  login: admin
+
+- url: /
+  script: main.app

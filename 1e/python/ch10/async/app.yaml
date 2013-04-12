@@ -1,0 +1,12 @@
+application: async
+version: 1
+runtime: python
+api_version: 1
+
+handlers:
+- url: /
+  script: main.py
+- url: /callbackobj
+  script: callbackobj.py
+- url: /callbackfunc
+  script: callbackfunc.py

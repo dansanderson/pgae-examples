@@ -1,0 +1,22 @@
+application: showfiles
+version: 1
+runtime: python27
+api_version: 1
+threadsafe: true
+
+handlers:
+- url: /
+  script: showfiles.app
+
+- url: /static/(.*)\.xxx
+  static_files: static/\1.xxx
+  upload: static/.*\.xxx
+  mime_type: text/plain
+
+- url: /static
+  static_dir: static
+
+- url: /staticexpires.txt
+  static_files: staticexpires.txt
+  upload: staticexpires.txt
+  expiration: "1d"

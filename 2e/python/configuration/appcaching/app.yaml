@@ -1,0 +1,19 @@
+application: clock
+version: 1
+runtime: python27
+api_version: 1
+
+# This demo uses global variables without much consideration for
+# thread safety.  In a real app, you would take more care that
+# concurrent request handlers on the same instance would manage the
+# global memory correctly.
+#
+# When this is set to true, requests are more likely to be handled by
+# existing instances.  Set this to false to encourage App Engine to
+# start more instances.  (You'll only see this behavior on App Engine,
+# not in the development server.)
+threadsafe: true
+
+handlers:
+- url: /
+  script: main.app

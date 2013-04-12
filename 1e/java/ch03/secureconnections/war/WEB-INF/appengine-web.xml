@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<appengine-web-app xmlns="http://appengine.google.com/ns/1.0">
+  <application>ae-book</application>
+  <version>exampletest</version>
+
+  <!-- By default, any Java app URL can be accessed over SSL (with an
+       https:// URL). You can require SSL for URLs using configuration
+       in web.xml. To disable SSL for the entire app, set ssl-enabled
+       to "false" below. (You can only disable SSL for the entire app,
+       not specific URLs.) -->
+  <!-- <ssl-enabled>false</ssl-enabled> -->
+
+</appengine-web-app>

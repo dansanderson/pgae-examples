@@ -1,0 +1,16 @@
+application: clock
+version: 1
+runtime: python27
+api_version: 1
+threadsafe: false
+
+handlers:
+
+# See zipserve.py in this directory for a special note about using
+# zipserve with App Engine 1.7.2, python27, and multithreading
+# enabled.
+- url: /archive/.*
+  script: zipserve.app
+
+- url: /.*
+  script: main.app

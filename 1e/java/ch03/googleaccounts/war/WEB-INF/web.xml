@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE web-app PUBLIC
+ "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+ "http://java.sun.com/dtd/web-app_2_3.dtd">
+
+<web-app xmlns="http://java.sun.com/xml/ns/javaee" version="2.5">
+  <servlet>
+    <servlet-name>accountstatus</servlet-name>
+    <servlet-class>googleaccounts.AccountStatusServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>accountstatus</servlet-name>
+    <url-pattern>/</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>accountstatus</servlet-name>
+    <url-pattern>/required</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>accountstatus</servlet-name>
+    <url-pattern>/admin</url-pattern>
+  </servlet-mapping>
+  
+  <security-constraint>
+    <web-resource-collection>
+      <web-resource-name>required</web-resource-name>
+      <url-pattern>/required</url-pattern>
+    </web-resource-collection>
+    <auth-constraint>
+      <role-name>*</role-name>
+    </auth-constraint>
+  </security-constraint>
+
+  <security-constraint>
+    <web-resource-collection>
+      <web-resource-name>admin</web-resource-name>
+      <url-pattern>/admin</url-pattern>
+    </web-resource-collection>
+    <auth-constraint>
+      <role-name>admin</role-name>
+    </auth-constraint>
+  </security-constraint>
+</web-app>

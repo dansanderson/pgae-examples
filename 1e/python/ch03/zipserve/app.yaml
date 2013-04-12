@@ -1,0 +1,11 @@
+application: clock
+version: 1
+runtime: python
+api_version: 1
+
+handlers:
+- url: /archive/.*
+  script: $PYTHON_LIB/google/appengine/ext/zipserve
+
+- url: /.*
+  script: main.py

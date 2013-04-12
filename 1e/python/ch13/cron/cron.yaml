@@ -1,0 +1,4 @@
+cron:
+- description: A scheduled task.
+  url: /scheduledtask
+  schedule: every 5 minutes

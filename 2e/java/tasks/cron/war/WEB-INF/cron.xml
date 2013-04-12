@@ -1,0 +1,7 @@
+<cronentries>
+  <cron>
+    <url>/scheduledtask</url>
+    <description>A scheduled task.</description>
+    <schedule>every 5 minutes</schedule>
+  </cron>
+</cronentries>

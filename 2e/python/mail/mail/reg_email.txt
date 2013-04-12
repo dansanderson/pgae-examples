@@ -1,0 +1,19 @@
+Greetings, {{ current_user_addr }}!
+
+Thank you for purchasing The Example App, the best
+example on the market!  Your registration key is attached
+to this email.
+
+To install your key, download the attachment, then select
+"Register..." from the Help menu.  Select the key file, then click
+"Register".
+
+You can download the app at any time from:
+  http://www.example.com/downloads/
+
+[This is not a real website.]
+
+Thanks again!
+
+The Example Team
+{{ app_email_address }}

@@ -1,0 +1,15 @@
+application: cron
+version: 1
+runtime: python27
+api_version: 1
+threadsafe: true
+
+handlers:
+- url: /_ah/queue/default
+  script: task.app
+  login: admin
+- url: /send_invitation_task
+  script: task.app
+  login: admin
+- url: /
+  script: taskenqueue.app

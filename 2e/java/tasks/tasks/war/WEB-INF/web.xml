@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE web-app PUBLIC
+ "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+ "http://java.sun.com/dtd/web-app_2_3.dtd">
+
+<web-app xmlns="http://java.sun.com/xml/ns/javaee" version="2.5">
+  <servlet>
+    <servlet-name>taskenqueue</servlet-name>
+    <servlet-class>tasks.TaskEnqueueServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>taskenqueue</servlet-name>
+    <url-pattern>/</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>defaulttask</servlet-name>
+    <servlet-class>tasks.TaskServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>defaulttask</servlet-name>
+    <url-pattern>/_ah/queue/default</url-pattern>
+  </servlet-mapping>
+
+  <security-constraint>
+    <web-resource-collection>
+      <web-resource-name>defaulttaskurl</web-resource-name>
+      <url-pattern>/_ah/queue/default</url-pattern>
+    </web-resource-collection>
+    <auth-constraint>
+      <role-name>admin</role-name>
+    </auth-constraint>
+  </security-constraint>
+
+  <servlet>
+    <servlet-name>sendinvitationtask</servlet-name>
+    <servlet-class>tasks.TaskServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>sendinvitationtask</servlet-name>
+    <url-pattern>/send_invitation_task</url-pattern>
+  </servlet-mapping>
+
+  <security-constraint>
+    <web-resource-collection>
+      <web-resource-name>sendinvitationtaskurl</web-resource-name>
+      <url-pattern>/send_invitation_task</url-pattern>
+    </web-resource-collection>
+    <auth-constraint>
+      <role-name>admin</role-name>
+    </auth-constraint>
+  </security-constraint>
+</web-app>

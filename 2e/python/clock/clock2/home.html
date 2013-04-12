@@ -1,0 +1,19 @@
+<html>
+  <head>
+    <title>The Time Is...</title>
+  </head>
+  <body>
+  {% if user %}
+    <p>
+      Welcome, {{ user.email() }}!
+      You can <a href="{{ logout_url }}">sign out</a>.
+    </p>
+  {% else %}
+    <p>
+      Welcome!
+      <a href="{{ login_url }}">Sign in or register</a> to customize.
+    </p>
+  {% endif %}
+    <p>The time is: {{ current_time }}</p>
+  </body>
+</html>

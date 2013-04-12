@@ -1,0 +1,12 @@
+<html>
+  <body>
+    <p>Welcome to The Book Store!</p>
+    <p>Books in our catalog:</p>
+    <ul>
+    {% for book in books %}
+      <li>{{ book.title }}, by {{ book.author }} ({{ book.copyright_year }})</li>
+    {% endfor %}
+    </ul>
+    <p>[<a href="/books/book/">add a book</a>]</p>
+  </body>
+</html>

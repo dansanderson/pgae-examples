@@ -1,0 +1,22 @@
+<html>
+  <head>
+    <title>Blobstore Demo</title>
+  </head>
+  <body>
+    <h2>{{ upload.blob.filename }}</h2>
+    <p>{{ upload.description }}</p>
+
+    <p><a href="/">Back to file list</a></p>
+
+    <form action="/viewhex" method="get">
+      <input type="hidden" name="key" value="{{ upload.key() }}" />
+      <label for="start">Range start:</label>
+      <input type="text" id="start" name="start" value="{{ start }}" size="6" />
+      <label for="end">Range end:</label>
+      <input type="text" id="end" name="end" value="{{ end }}" size="6" />
+      <input type="submit" value="Go" />
+    </form>
+
+    <pre>{{ hex|escape }}</pre>
+  </body>
+</html>

@@ -1,0 +1,7 @@
+The app URL /archive/somedir/somefile.txt serves this file because
+URLs under /archive/ are mapped to the zipserve handler, and this file
+exists in the archive named archive.zip, as somedir/somefile.txt.
+
+The UNUSED_archive directory has the same contents as the ZIP archive,
+and is here so you can see what's in it.  The app does not use this
+directory, it gets this file from the archive.

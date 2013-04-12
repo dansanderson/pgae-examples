@@ -1,0 +1,18 @@
+<html>
+  <head>
+    <title>Blobstore Demo</title>
+  </head>
+  <body>
+    <h2>{{ upload.blob.filename }}</h2>
+    <p>{{ upload.description }}</p>
+
+    <p><a href="/">Back to file list</a></p>
+
+    <p>Archive contents:</p>
+    <ul>
+      {% for info in info_list %}
+      <li>{{ info.filename }} ({{ info.file_size }} bytes)</li>
+      {% endfor %}
+    </ul>
+  </body>
+</html>

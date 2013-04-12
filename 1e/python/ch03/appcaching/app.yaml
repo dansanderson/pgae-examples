@@ -1,0 +1,11 @@
+application: clock
+version: 1
+runtime: python
+api_version: 1
+
+handlers:
+- url: /cached
+  script: cachedscript.py
+
+- url: /
+  script: main.py

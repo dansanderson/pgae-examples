@@ -1,0 +1,45 @@
+<html>
+  <head>
+    <title>Blobstore Demo</title>
+  </head>
+  <body>
+    {% if user %}
+    <p>Welcome, {{ user.email() }}! You can <a href="{{ logout_url }}">sign out</a>.</p>
+
+    {% if uploads %}
+    <form action="/delete" method="post">
+    <p>Your uploads:</p>
+    <ul>
+      {% for upload in uploads %}
+      <li>
+        <input type="checkbox" name="delete" value="{{ upload.key() }}" />
+        {{ upload.description }}:
+        <a href="/view?key={{ upload.key() }}">{{ upload.blob.filename }}</a>
+        [<a href="/viewhex?key={{ upload.key() }}">view hex</a>]
+        {% if upload.blob.content_type == 'application/zip' %}
+        [<a href="/viewzip?key={{ upload.key() }}">view zip file list</a>]
+        {% endif %}
+      </li>
+      {% endfor %}
+    </ul>
+    <input type="submit" value="Delete Selected" />
+    </form>
+    {% else %} {# User has no uploads. #}
+    <p>You have no uploads.</p>
+    {% endif %}
+
+    <p>Upload files:</p>
+    <form action="{{ upload_url }}" method="post" enctype="multipart/form-data">
+      <label for="description">Description:</label>
+        <input type="text" name="description" id="description" /><br />
+      <label for="upload">File:</label>
+        <input type="file" name="upload" id="upload" multiple="true" /><br />
+      <input type="submit" value="Upload File" />
+    </form>
+
+    {% else %} {# User is not signed in. #}
+    <p>Welcome! Please
+    <a href="{{ login_url }}">sign in or register</a> to upload files.</p>
+    {% endif %}
+  </body>
+</html>

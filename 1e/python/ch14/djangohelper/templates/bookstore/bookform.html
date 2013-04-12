@@ -1,0 +1,16 @@
+<html>
+  <body>
+
+  {% if book_id %}
+    <p>Edit book {{ book_id }}:</p>
+    <form action="/books/book/{{ book_id }}" method="POST">
+  {% else %}
+    <p>Create book:</p>
+    <form action="/books/book/" method="POST">
+  {% endif %}
+      {{ form.as_p }}
+      <input type="submit" />
+    </form>
+
+  </body>
+</html>

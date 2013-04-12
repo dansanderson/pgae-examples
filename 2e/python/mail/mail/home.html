@@ -1,0 +1,14 @@
+<html>
+  <head>
+    <title>Mail Demo</title>
+  </head>
+  <body>
+    <p>An email has been sent to your address ({{ current_user_email }}).</p>
+
+  {% if is_dev_server %}
+    <p>You are running on the development server.   You can use <a href="/_ah/admin/inboundmail">the development server console</a> to send email to this application.</p>
+  {% else %}
+    <p>You are running on App Engine.  You can <a href="mailto:{{ app_email_address }}">send email to {{ app_email_address }}</a> to send a message to the application.</p>
+  {% endif %}
+  </body>
+</html>

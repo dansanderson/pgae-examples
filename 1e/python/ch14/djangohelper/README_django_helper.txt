@@ -1,0 +1,199 @@
+GOOGLE APP ENGINE HELPER FOR DJANGO
+===================================
+
+This package provides a helper that eases the process of developing a Django
+project to run on the Google App Engine. The helper is structured as a Django
+application that should be installed inside your project. See below for
+detailed usage instructions.
+
+The helper provides the following functionality:
+
+  * The ability to use most manage.py commands
+    - Additional manage.py commands (update, rollback, and vacuum_indexes) that
+      operate identically to the appcfg.py equivalents.
+  * A BaseModel class that appears the same as the standard Django Model class.
+  * The ability to serialize and deserialize model instances to JSON, YAML and
+    XML.
+  * Access to Django's test framework with a test datastore and support for
+    fixtures.
+  * The ability to send email via the App Engine mail API using the standard
+    Django mail functions.
+  * An App Engine compatible implementation of the Django authentication
+    framework. Only users are supported at this time. Group and Permission
+    support is not implemented.
+  * Support for the Django memcache cache backend module.
+  * Support for the db and cache session backed modules.
+
+The helper is provided in the context of a blank Django project, very
+similar to what would be provided by the django-admin.py startproject command.
+This project contains minor customisations to manage.py and settings.py that
+demonstrate how to integrate the helper with a Django project.
+
+To use the helper you have two choices:
+
+1) Copy the entire project provided with the helper and modify it to bootstrap
+   your project.
+2) Copy the appengine_django application into your existing project and modify
+   the settings appropriately.
+
+Instructions for both cases are provided below.
+
+
+Obtaining the helper
+--------------------
+
+You can download the latest released version of the helper from the Google Code
+project at: http://code.google.com/p/google-app-engine-django
+
+The helper will be unzipped into a directory named appengine_helper_for_django.
+
+Alternatively you can check out the latest version of the helper directly from
+the SVN repository with the following command:
+
+svn co http://google-app-engine-django.googlecode.com/svn/trunk/ \
+  appengine_helper_for_django
+
+
+Required Software
+-----------------
+
+You will need the Google App Engine SDK and its dependencies installed on your
+computer. Additionally if you are developing on a Windows machine you will need
+to install the Python for Windows extensions from
+http://sourceforge.net/projects/pywin32/
+
+This version of the helper requires Django 1.0beta_1 or greater. If you would
+prefer to use the stable version of Django (0.96) that is bundled with the App
+Engine SDK then you can download revision 53 or earlier of the helper from the
+address in the previous section. You must place Django in a directory named
+django/ instead your project, or provide a django.zip file containing the
+zipped Django source. See below for details.
+
+
+Using the helper to bootstrap a new project
+-------------------------------------------
+
+1) Copy the appengine_helper_for_django directory to a new location named after
+   your project
+
+2) Edit the application line in app.yaml to match the name you registered your
+   application under in the Admin Console.
+
+3) If you have installed the Google App Engine SDK using the Windows or MacOS
+   installers provided by Google you may skip this step.
+
+   Create a symlink from the location of the extracted SDK zipfile to the
+   '.google_appengine' directory inside your project. E.g:
+
+   ln -s /home/me/google_appengine /home/me/myproject/.google_appengine
+
+   If you like to stay up to date see the 'SDK via SVN' section below for an
+   alternative setup.
+
+4) Download and copy Django into the django/ subdirectory of your project.
+   Alternatively you can create a zipfile of the Django code and place it at
+   django.zip inside your project. E.g.
+
+   /home/me/myproject/django          (directory method)
+   /home/me/myproject/django.zip      (zipfile method)
+
+5) Run manage.py to start a new application for your code:
+
+   python manage.py startapp myapplication
+
+6) Add your code!
+
+
+Installing the helper into an existing project
+----------------------------------------------
+
+1) Copy the appengine_django application from within the helper into your
+   project.
+
+2) Copy app.yaml and main.py from within the helper into your project.
+
+3) Edit the application line in app.yaml to match the name you registered your
+   application under in the Admin Console.
+
+4) Add the following two lines to the top of manage.py::
+
+       from appengine_django import InstallAppengineHelperForDjango
+       InstallAppengineHelperForDjango()
+
+5) If you have installed the Google App Engine SDK using the Windows or MacOS
+   installers provided by Google you may skip this step.
+
+   Create a symlink from the location of the extracted SDK zipfile to the
+   '.google_appengine' directory inside your project. E.g:
+
+   ln -s /home/me/google_appengine /home/me/myproject/.google_appengine
+
+   If you like to stay up to date see the 'SDK via SVN' section below for an
+   alternative setup.
+
+6) Ensure Django is available within your project as described in Step 4 of the
+   instructions for bootstrapping new porjects above.
+
+7) Remove incompatible settings from your settings.py file.
+
+   The helper can warn you about some settings that it knows to be
+   incompatible, you can see these warnings by running::
+
+       python manage.py diffsettings
+
+   For the rest you'll just have to experiment by trial and error. The main
+   problem here is usually loading middleware that attempts to import modules
+   that are banned by the appserver.
+
+8) Port your models and code over to the appengine_django.model.BaseModel
+   class.
+
+
+SDK via SVN
+-----------
+
+If you are using SVN to manage your project and you would like to keep up to
+date with the latest SDK without having to download and install it regularly
+you can use an svn:external to include the SDK in our project.
+
+Once you have commited the basic structure of your project to your repository
+change to the base directory and add the following line to the svn:externals
+property using svn propset or svn propedit.
+
+.google_appengine http://googleappengine.googlecode.com/svn/trunk/python/
+
+Then run svn update and a copy of the SDK will be installed into the
+'.google_appengine' subdirectory. This copy of the SDK will be updated with the
+latest changes from the Google Code repository every time you run svn update.
+
+
+Contributing to the helper
+--------------------------
+
+We would be happy to consider any additions or bugfixes that you would like to
+add to the helper. Please add them as a patch, in unified diff format to the
+Issue Tracker at: http://code.google.com/p/google-app-engine-django/issues/list
+
+Before we can accept your code you will need to have signed the Google
+Contributer License. You can find this at:
+
+http://code.google.com/legal/individual-cla-v1.0.html
+or
+http://code.google.com/legal/corporate-cla-v1.0.html
+
+If you are an Individual contributor you will be able to electronically sign
+and submit the form at the URL above. Please ensure that you use the same email
+address to submit your patch as you used to sign the CLA.
+
+
+Reporting Bugs and Requesting Features
+--------------------------------------
+
+Please see the KNOWN_ISSUES file and the existing list of issues at
+http://code.google.com/p/google-app-engine-django/issues to see if your problem
+has already been reported.
+
+If you find a bug or would like to request a feature you may do so at the
+Google Code issue tracker for this project:
+
+http://code.google.com/p/google-app-engine-django/issues/entry

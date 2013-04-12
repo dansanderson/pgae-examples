@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE web-app PUBLIC
+ "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+ "http://java.sun.com/dtd/web-app_2_3.dtd">
+
+<web-app xmlns="http://java.sun.com/xml/ns/javaee" version="2.5">
+  <servlet>
+    <servlet-name>xmpp</servlet-name>
+    <servlet-class>xmpp.MainPageServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>xmpp</servlet-name>
+    <url-pattern>/</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>update</servlet-name>
+    <servlet-class>xmpp.UpdateServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>update</servlet-name>
+    <url-pattern>/update</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>chat</servlet-name>
+    <servlet-class>xmpp.ChatServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>chat</servlet-name>
+    <url-pattern>/_ah/xmpp/message/chat/</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>subscription</servlet-name>
+    <servlet-class>xmpp.SubscriptionServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>subscription</servlet-name>
+    <url-pattern>/_ah/xmpp/subscription/*</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>presence</servlet-name>
+    <servlet-class>xmpp.PresenceServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>presence</servlet-name>
+    <url-pattern>/_ah/xmpp/presence/*</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>xmpperror</servlet-name>
+    <servlet-class>xmpp.XmppErrorServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>xmpperror</servlet-name>
+    <url-pattern>/_ah/xmpp/error/</url-pattern>
+  </servlet-mapping>
+
+  <security-constraint>
+    <web-resource-collection>
+      <url-pattern>/*</url-pattern>
+    </web-resource-collection>
+    <auth-constraint>
+      <role-name>*</role-name>
+    </auth-constraint>
+  </security-constraint>
+</web-app>

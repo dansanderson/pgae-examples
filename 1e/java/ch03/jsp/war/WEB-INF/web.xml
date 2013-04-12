@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE web-app PUBLIC
+ "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+ "http://java.sun.com/dtd/web-app_2_3.dtd">
+
+<web-app xmlns="http://java.sun.com/xml/ns/javaee" version="2.5">
+  <servlet>
+    <servlet-name>jsptest</servlet-name>
+    <servlet-class>jsptest.JspTestServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>jsptest</servlet-name>
+    <url-pattern>/</url-pattern>
+  </servlet-mapping>
+
+  <!-- We don't need an explicit mapping for each JSP here.  App
+       Engine maps each JSP to its filesystem path automatically.
+       However, a <servlet-mapping> will override a JSP. -->
+
+</web-app>

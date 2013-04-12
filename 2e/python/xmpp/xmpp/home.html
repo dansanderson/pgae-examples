@@ -1,0 +1,158 @@
+<html>
+  <head>
+    <title>XMPP Demo</title>
+    <style>
+body {
+  font-family: sans-serif;
+  font-size: 14px;
+}
+
+#admin_message {
+  padding: 0.5em 1em;
+  border: 1px solid #ccc;
+}
+.hidden {
+  display: none;
+}
+
+table {
+  border: 1px solid #ccc;
+  width: 100%;
+  margin-bottom: 1em;
+}
+table th {
+  text-align: left;
+  font-size: 12px;
+  background: #05c;
+  color: white;
+  padding: 0.5em 1em 0.5em 0.5em;
+}
+table td {
+  padding: 0.2em 1em 0.2em 0.5em;
+}
+
+.chat { color: #060; }
+.away { color: #660; }
+.dnd { color: #600; }
+.xa { color: #300; }
+
+    </style>
+
+  </head>
+  <body>
+
+<p>Welcome, {{ current_user.email() }}!  The time is {{ current_time }}.  You can <a href="{{ signout_url }}">sign in as a different user</a>.</p>
+
+{% if is_user_admin %}
+
+  {% if admin_message %}
+  <div id="admin_message">{{ admin_message }}  <a href="#" onclick="document.getElementById('admin_message').classList.add('hidden');">Dismiss</a></div>
+  {% endif %}
+
+  {% if is_dev_server %}
+    <p>You are running on the development server.  You can use <a href="/_ah/admin/xmpp">the development server console</a> to send an XMPP chat message to this application.  <i>Be sure to use <b>{{ app_id }}@appspot.com</b> or <b>anything@{{ app_id }}.appspotchat.com</b> as the "To" address.</i></p>
+  {% else %}
+    <p>You are running on App Engine.  You can send an XMPP chat message to <b>{{ app_xmpp_address }}</b> to communicate with this application.</p>
+  {% endif %}
+
+  <h2>Users</h2>
+  {% if has_chat_users %}
+  <form action="/update" method="post">
+    <input type="hidden" name="command" value="clear_users" />
+    <input type="submit" value="Clear User Records" />
+  </form>
+  {% endif %}
+
+  <form action="/update" method="post">
+  {% if has_chat_users %}
+    <table>
+      <tr>
+        <th></th>
+        <th>JID</th>
+        <th>Accepted invitation?</th>
+        <th>Subscribed to app?</th>
+        <th>Status</th>
+        <th>GTalk Presence?</th>
+        <th width="40%">Last Chat Message</th>
+      </tr>
+      {% for chat_user in chat_users %}
+      <tr>
+        <td><input name="jid" type="radio" value="{{ chat_user.jid }}" {% if loop.first %}checked {% endif %}/></td>
+        <td>{{ chat_user.jid }}</td>
+        <td>{{ chat_user.accepted_invitation }}</td>
+        <td>{{ chat_user.is_subscribed }}</td>
+        <td>
+          {% if chat_user.is_available %}
+            <span class="{{ chat_user.presence_show }}">{{ chat_user.presence_show }}</span>
+            {% if chat_user.status_message %}<span>{{ chat_user.status_message }}</span>{% endif %}
+          {% else %}
+            unavailable
+          {% endif %}
+        </td>
+        <td>{{ chat_user._gtalk_presence }}</td>
+        <td>{{ chat_user.last_chat_message|escape }}</td>
+      </tr>
+      {% endfor %}
+      <tr>
+        <td><input name="jid" type="radio" value="" /></td>
+        <td colspan="6">...or enter a JID: <input name="jid_other" type="text" value="" width="100px" /></td>
+      </tr>
+    </table>
+  {% else %}
+    <p>There has not yet been any chat activity.</p>
+    <p>
+      <input name="jid" type="hidden" value="" />
+      <label for="jid_other">Enter a JID:</label>
+      <input name="jid_other" type="text" value="" width="100px" />
+    </p>
+  {% endif %}
+    <p>
+      <input name="command" type="radio" value="chat" checked /> Send a chat message:<br />
+      <textarea name="chat_message" cols="60" rows="4"></textarea><br />
+      <input name="command" type="radio" value="invite" /> Invite to chat<br />
+      <input name="command" type="radio" value="probe" /> Probe for presence
+    </p>
+    <input type="submit" value="Make Request" />
+  </form>
+
+  <h2>App Presence</h2>
+  <p>
+    The app presence is currently set to
+    <b>{% if status.presence_available %}available{% else %}unavailable{% endif %}</b>
+    and <b>{{ status.presence_show }}</b>{% if status.status_message %}, "{{ status.status_message }}"{% endif %}.
+  </p>
+  <form action="/update" method="post">
+    <input name="command" type="hidden" value="presence" />
+
+    <p><label for="presence_available">Set availability:</label><br />
+    <input name="presence_available" type="radio" value="true" {% if status.presence_available %}checked {% endif %} /> available<br />
+    <input name="presence_available" type="radio" value="false" {% if not status.presence_available %}checked {% endif %} /> unavailable<br />
+    </p>
+
+    <p><label for="presence_show">Set status:</label><br />
+    <input name="presence_show" type="radio" value="chat" {% if status.presence_show == 'chat' %}checked {% endif %} /> chat<br />
+    <input name="presence_show" type="radio" value="away" {% if status.presence_show == 'away' %}checked {% endif %} /> away<br />
+    <input name="presence_show" type="radio" value="dnd" {% if status.presence_show == 'dnd' %}checked {% endif %} /> do not disturb<br />
+    <input name="presence_show" type="radio" value="xa" {% if status.presence_show == 'xa' %}checked {% endif %} /> extended away<br />
+    </p>
+
+    <p><label for="status_message">Status message:</label> <input name="status_message" value="" width="100px" /></p>
+
+    <input type="submit" value="Make Request" />
+  </form>
+
+  <h2>Last Error</h2>
+  {% if status.last_error %}
+  <p>Last error:</p>
+  <pre>{{ status.last_error }}</pre>
+  <p>Received: {{ status.last_error_datetime }}</p>
+  {% else %}
+  <p>The app has not yet received an error XMPP message.</p>
+  {% endif %}
+
+{% else %}
+  <p>You must be signed in as an administrator to use the control panel.</p>
+{% endif %}
+
+  </body>
+</html>
