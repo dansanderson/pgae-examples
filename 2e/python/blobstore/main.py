@@ -145,15 +145,16 @@ class DeleteHandler(webapp2.RequestHandler):
         user = users.get_current_user()
         if user:
             entities_to_delete = []
+            blobs_to_delete = []
             for delete_key in self.request.params.getall('delete'):
                 upload = db.get(delete_key)
                 if upload.user != user:
                     continue
                 entities_to_delete.append(upload.key())
-                entities_to_delete.append(
-                    db.Key.from_path('__BlobInfo__', str(upload.blob.key())))
+                blobs_to_delete.append(upload.blob.key())
 
             db.delete(entities_to_delete)
+            blobstore.delete(blobs_to_delete)
 
         self.redirect('/')
 

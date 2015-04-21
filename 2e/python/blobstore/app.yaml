@@ -1,5 +1,5 @@
-application: blobstore
-version: 1
+application: phbt-ack
+version: blobstoretest
 runtime: python27
 api_version: 1
 threadsafe: yes
