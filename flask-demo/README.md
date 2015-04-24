@@ -7,8 +7,8 @@ virtualenv venv
 source venv/bin/activate
 
 cd flask-demo
-pip install requirements_cfg.txt
-pip install -t lib requirements_vnd.txt
+pip install -r requirements_cfg.txt
+pip install -t lib -r requirements_vnd.txt
 ```
 
 To run a GAE development server:
